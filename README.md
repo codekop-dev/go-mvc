@@ -1,12 +1,15 @@
 # Codekop Go MVC
 
-Versi Go + Gin yang mudah dipelajari oleh pengguna `codekop_v5`. Fondasinya tetap
-memakai `database/sql` dan `net/http` dari Go, sementara routing/middleware memakai
-Gin. Driver database ditambahkan karena Go memang tidak membawa driver MariaDB/
-PostgreSQL di standard library.
+Starter project Go + Gin untuk pengguna PHP yang ingin memahami cara membangun
+MVC dan REST API dengan Go secara bertahap. Struktur controller, model, repository,
+helper, route, migration, testing, dan response JSON dibuat sengaja terlihat jelas
+agar mudah dibandingkan dengan pola kerja PHP/CodeIgniter.
 
-Project ini adalah bahan belajar bertahap, bukan port semua modul bisnis PHP.
-Referensi struktur PHP yang dipakai adalah `/home/linuxbrew/.linuxbrew/var/www/php84/codekop_v5/app`.
+Referensi pola aplikasi PHP yang digunakan adalah repository
+[php-mvc-codekop](https://github.com/fauzan1892/php-mvc-codekop). Project ini bukan
+salinan seluruh fitur aplikasi PHP tersebut, tetapi versi belajar yang mengambil
+konsep dasarnya lalu menerapkannya dengan gaya Go: dependency injection sederhana,
+`database/sql`, Gin, validasi eksplisit, dan error handling yang jelas.
 
 ## Untuk developer framework PHP yang belajar Go
 
