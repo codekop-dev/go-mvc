@@ -1,0 +1,99 @@
+{
+  "info": {
+    "_postman_id": "codekop-go-mvc-local-collection",
+    "name": "Codekop Go MVC",
+    "description": "Sample API Gin untuk belajar migrasi dari PHP MVC ke Go.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "base_url", "value": "http://localhost:8080" },
+    { "key": "item_id", "value": "1" },
+    { "key": "limit", "value": "20" },
+    { "key": "page", "value": "1" },
+    { "key": "per_page", "value": "20" }
+  ],
+  "item": [
+    {
+      "name": "01 - Basic API",
+      "item": [
+        {
+          "name": "Health",
+          "request": { "method": "GET", "header": [], "url": { "raw": "{{base_url}}/api/health", "host": ["{{base_url}}"], "path": ["api", "health"] } }
+        },
+        {
+          "name": "Echo JSON",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"nama\": \"Budi\",\n  \"role\": \"admin\"\n}" },
+            "url": { "raw": "{{base_url}}/api/echo", "host": ["{{base_url}}"], "path": ["api", "echo"] }
+          }
+        },
+        {
+          "name": "Route Parameter",
+          "request": { "method": "GET", "header": [], "url": { "raw": "{{base_url}}/api/route/ABC-123?source=postman", "host": ["{{base_url}}"], "path": ["api", "route", "ABC-123"], "query": [{ "key": "source", "value": "postman" }] } }
+        }
+      ]
+    },
+    {
+      "name": "02 - Transactions",
+      "item": [
+        {
+          "name": "Latest Transactions",
+          "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": ["pm.test('status 200', function () { pm.response.to.have.status(200); });", "const json = pm.response.json();", "pm.expect(json.code).to.eql(200);", "pm.expect(json).to.have.property('pagination');"] } }],
+          "request": { "method": "GET", "header": [], "url": { "raw": "{{base_url}}/api/db/transaksi?page={{page}}&per_page={{per_page}}", "host": ["{{base_url}}"], "path": ["api", "db", "transaksi"], "query": [{ "key": "page", "value": "{{page}}" }, { "key": "per_page", "value": "{{per_page}}" }] } }
+        }
+      ]
+    },
+    {
+      "name": "03 - CRUD Items",
+      "item": [
+        {
+          "name": "List Items",
+          "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": ["pm.test('status 200', function () { pm.response.to.have.status(200); });", "const json = pm.response.json();", "pm.expect(json.code).to.eql(200);", "pm.expect(json).to.have.property('pagination');"] } }],
+          "request": { "method": "GET", "header": [], "url": { "raw": "{{base_url}}/api/items?page={{page}}&per_page={{per_page}}", "host": ["{{base_url}}"], "path": ["api", "items"], "query": [{ "key": "page", "value": "{{page}}" }, { "key": "per_page", "value": "{{per_page}}" }] } }
+        },
+        {
+          "name": "Create Item",
+          "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": ["pm.test('status 201', function () { pm.response.to.have.status(201); });", "const json = pm.response.json();", "if (json.data && json.data.id) pm.environment.set('item_id', json.data.id);"] } }],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"name\": \"Item dari Postman\",\n  \"total\": 250000\n}" },
+            "url": { "raw": "{{base_url}}/api/items", "host": ["{{base_url}}"], "path": ["api", "items"] }
+          }
+        },
+        {
+          "name": "Show Item",
+          "request": { "method": "GET", "header": [], "url": { "raw": "{{base_url}}/api/items/{{item_id}}", "host": ["{{base_url}}"], "path": ["api", "items", "{{item_id}}"] } }
+        },
+        {
+          "name": "Update Item",
+          "request": {
+            "method": "PATCH",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"total\": 225000\n}" },
+            "url": { "raw": "{{base_url}}/api/items/{{item_id}}", "host": ["{{base_url}}"], "path": ["api", "items", "{{item_id}}"] }
+          }
+        },
+        {
+          "name": "Delete Item",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": { "raw": "{{base_url}}/api/items/{{item_id}}", "host": ["{{base_url}}"], "path": ["api", "items", "{{item_id}}"] }
+          }
+        },
+        {
+          "name": "Validation Error Example",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"total\": -1\n}" },
+            "url": { "raw": "{{base_url}}/api/items", "host": ["{{base_url}}"], "path": ["api", "items"] }
+          }
+        }
+      ]
+    }
+  ]
+}

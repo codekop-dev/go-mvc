@@ -1,0 +1,18 @@
+root = "."
+tmp_dir = "tmp"
+
+[build]
+cmd = "go build -buildvcs=false -o ./tmp/gomvc ./cmd/server"
+bin = "tmp/gomvc"
+delay = 500
+include_ext = ["go", "env"]
+exclude_dir = ["tmp", "vendor", "postman", "migrations", "testing"]
+stop_on_error = true
+send_interrupt = true
+kill_delay = "500ms"
+
+[log]
+time = true
+
+[screen]
+clear_on_rebuild = true
